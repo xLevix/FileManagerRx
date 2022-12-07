@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane prefHeight="604.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.filemanagerrx.View">
+   <children>
+      <FontAwesomeIconView fx:id="left" glyphName="ARROW_LEFT" layoutX="67.0" layoutY="81.0" size="24" />
+      <FontAwesomeIconView fx:id="right" glyphName="ARROW_RIGHT" layoutX="165.0" layoutY="82.0" size="24" text="" />
+      <TextField fx:id="path" layoutX="299.0" layoutY="51.0" prefHeight="42.0" prefWidth="539.0" />
+      <ScrollPane fx:id="pane" layoutX="34.0" layoutY="123.0" prefHeight="461.0" prefWidth="849.0">
+         <content>
+            <TextFlow fx:id="print" prefHeight="456.0" prefWidth="844.0" />
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>
