@@ -11,9 +11,14 @@
       <FontAwesomeIconView fx:id="left" glyphName="ARROW_LEFT" layoutX="67.0" layoutY="81.0" size="24" />
       <FontAwesomeIconView fx:id="right" glyphName="ARROW_RIGHT" layoutX="165.0" layoutY="82.0" size="24" text="" />
       <TextField fx:id="path" layoutX="299.0" layoutY="51.0" prefHeight="42.0" prefWidth="539.0" />
-      <ScrollPane fx:id="pane" layoutX="34.0" layoutY="123.0" prefHeight="461.0" prefWidth="849.0">
+      <ScrollPane fx:id="pane" layoutX="371.0" layoutY="123.0" prefHeight="461.0" prefWidth="512.0">
          <content>
             <TextFlow fx:id="print" prefHeight="456.0" prefWidth="844.0" />
+         </content>
+      </ScrollPane>
+      <ScrollPane fx:id="dirPane" layoutX="21.0" layoutY="123.0" prefHeight="461.0" prefWidth="288.0">
+         <content>
+            <TextFlow fx:id="dirPrint" prefHeight="456.0" prefWidth="844.0" />
          </content>
       </ScrollPane>
    </children>

@@ -2,7 +2,7 @@ package com.example.filemanagerrx;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import io.reactivex.Observable;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.disposables.Disposable;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -11,14 +11,20 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import io.reactivex.rxjavafx.observables.JavaFxObservable;
-import javafx.scene.control.Button;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class View {
+
+    @FXML
+    private ScrollPane dirPane;
+
+    @FXML
+    private TextFlow dirPrint;
 
     @FXML
     private FontAwesomeIconView left;
@@ -34,6 +40,12 @@ public class View {
 
     @FXML
     private FontAwesomeIconView right;
+
+
+    //get all drives and return using Observable
+    public Observable<File> getDrives() {
+        return Observable.fromArray(File.listRoots());
+    }
 
     Observable<String> scanPathObs(String path) throws IOException {
         return Observable.create(emitter -> {
@@ -90,17 +102,41 @@ public class View {
         JavaFxObservable.eventsOf(left, MouseEvent.MOUSE_CLICKED)
                 .subscribe(
                         s -> {
-                            String url = path.getText();
-                            if (url.contains("\\")) {
-                                url = url.substring(0, url.lastIndexOf("\\"));
-                                path.setText(url);
-                            }else{
-                                url = "F:\\";
-                                path.setText(url);
+//                            String url = path.getText();
+//                            if (url.contains("\\")) {
+//                                url = url.substring(0, url.lastIndexOf("\\"));
+//                                path.setText(url);
+//                            }else{
+//                                url = "F:\\";
+//                                path.setText(url);
+//                            }
+                            print.getChildren().clear();
+                            String[] split = path.getText().split("\\\\");
+                            String newPath = "";
+                            for (int i = 0; i < split.length - 1; i++) {
+                                newPath += split[i] + "\\";
                             }
+                            path.setText(newPath);
                         }
                 );
 
+
+
+
+        Disposable drives = getDrives()
+                .subscribe(s -> {
+                    Text text = new Text(s.toString()+"\n");
+                    text.setFill(Color.BLUE);
+                    text.fontProperty().setValue(text.getFont().font(20));
+                    dirPrint.getChildren().add(text);
+
+                    JavaFxObservable.eventsOf(text, MouseEvent.MOUSE_CLICKED)
+                            .subscribe(
+                                    s1 -> {
+                                        path.setText(s.toString());
+                                    }
+                            );
+                });
 
     }
 
