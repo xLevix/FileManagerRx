@@ -3,6 +3,7 @@ package com.example.filemanagerrx;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -64,7 +65,7 @@ public class View {
 
     @FXML
     void initialize() {
-        path.setText("F:\\");
+        path.setText("C:\\");
 
         JavaFxObservable.valuesOf(path.textProperty())
                 .subscribe(
@@ -73,6 +74,8 @@ public class View {
                                 print.getChildren().clear();
 
                                 scanPathObs(s)
+                                        .subscribeOn(io.reactivex.schedulers.Schedulers.newThread())
+                                        .observeOn((JavaFxScheduler.platform()))
                                         .subscribe(
                                                 s1 -> {
                                                     String url = s1;
@@ -117,6 +120,7 @@ public class View {
                                 newPath += split[i] + "\\";
                             }
                             path.setText(newPath);
+
                         }
                 );
 
