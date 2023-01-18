@@ -55,7 +55,8 @@ public class View {
                         .filter(s -> s.toFile().isDirectory() || s.toFile().isFile())
                         .map(Path::toString)
                         .map(s -> s + "\n")
-                        .forEach(emitter::onNext);
+                        .sorted()
+                        .forEachOrdered(emitter::onNext);
                 emitter.onComplete();
             } catch (IOException e) {
                 emitter.onError(e);
@@ -86,6 +87,17 @@ public class View {
                                                                 .subscribe(
                                                                         s2 -> {
                                                                             path.setText(url);
+                                                                        }
+                                                                );
+                                                    }else{
+                                                        JavaFxObservable.eventsOf(text, MouseEvent.MOUSE_CLICKED)
+                                                                .subscribe(
+                                                                        s2 -> {
+                                                                            try {
+                                                                                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url.trim());
+                                                                            } catch (IOException e) {
+                                                                                e.printStackTrace();
+                                                                            }
                                                                         }
                                                                 );
                                                     }
